@@ -34,6 +34,18 @@ pub mod ticket {
         //  - `title` that returns the `title` field.
         //  - `description` that returns the `description` field.
         //  - `status` that returns the `status` field.
+
+        pub fn title(&self) -> &str {
+            self.title.as_str()
+        }
+
+        pub fn description(&self) -> String {
+            self.description.to_owned()
+        }
+
+        pub fn status(&self) -> String {
+            self.status.to_owned()
+        }
     }
 }
 
