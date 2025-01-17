@@ -12,7 +12,11 @@ mod tests {
     use std::mem::size_of;
 
     /*
-    Most references in Rust are represented, in memory, as a pointer to a memory location.
+    Most references(
+    Later in the course we'll talk about "fat pointers", i.e. pointers with additional metadata.
+    As the name implies, they are larger than the pointers we discussed in this chapter, also known as "thin pointers".
+    )
+    in Rust are represented, in memory, as a pointer to a memory location.
     It follows that their size is the same as the size of a pointer, a usize  .
     */
     #[test]
