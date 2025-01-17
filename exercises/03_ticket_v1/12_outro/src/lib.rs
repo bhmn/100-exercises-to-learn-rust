@@ -11,3 +11,69 @@
 // Integration here has a very specific meaning: they test **the public API** of your project.
 // You'll need to pay attention to the visibility of your types and methods; integration
 // tests can't access private or `pub(crate)` items.
+
+use std::panic;
+
+pub struct Order {
+    product_name: String,
+    quantity: u32,
+    unit_price: u32,
+}
+
+impl Order {
+    pub fn new(product_name: String, quantity: u32, unit_price: u32) -> Self {
+        if product_name.is_empty() {
+            panic!();
+        }
+
+        if product_name.len() > 300 {
+            panic!();
+        }
+
+        if quantity == 0 {
+            panic!();
+        }
+
+        if unit_price == 0 {
+            panic!();
+        }
+
+        Self {
+            product_name,
+            quantity,
+            unit_price,
+        }
+    }
+
+    pub fn total(&mut self) -> u32 {
+        let mut sum = 0;
+        for _ in 1..=self.quantity {
+            sum += self.unit_price;
+        }
+        sum
+    }
+
+    pub fn product_name(&self) -> &str {
+        self.product_name.as_str()
+    }
+
+    pub fn set_product_name(&mut self, product_name: String) {
+        self.product_name = product_name;
+    }
+
+    pub fn quantity(&self) -> &u32 {
+        &self.quantity
+    }
+
+    pub fn set_quantity(&mut self, quantity: u32) {
+        self.quantity = quantity;
+    }
+
+    pub fn unit_price(&self) -> &u32 {
+        &self.unit_price
+    }
+
+    pub fn set_unit_price(&mut self, unit_price: u32) {
+        self.unit_price = unit_price;
+    }
+}

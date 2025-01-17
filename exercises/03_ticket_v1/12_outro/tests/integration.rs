@@ -13,6 +13,8 @@ fn test_order() {
     assert_eq!(order.unit_price(), &2999);
     assert_eq!(order.total(), 8997);
 
+    
+
     order.set_product_name("Rust Book".to_string());
     order.set_quantity(2);
     order.set_unit_price(3999);
