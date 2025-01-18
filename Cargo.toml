@@ -13,6 +13,6 @@ resolver = "2"
 [profile.dev.package.copy]
 overflow-checks = false
 
-# [profile.dev]
-# opt-level = 1               # Use slightly better optimizations.
-# overflow-checks = false     # Disable integer overflow checks.
+[profile.dev]
+opt-level = 1               # Use slightly better optimizations.
+overflow-checks = false     # Disable integer overflow checks.
