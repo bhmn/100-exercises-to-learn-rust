@@ -1,5 +1,19 @@
 use std::cmp::PartialEq;
 
+/*
+
+This is the correspondence for the main operators:
+
+Operator    Trait
++	        Add
+-	        Sub
+*	        Mul
+/	        Div
+%	        Rem
+== and !=	PartialEq
+<, >, <=, and >=	PartialOrd
+Arithmetic operators live in the std::ops module, while comparison ones live in the std::cmp module.
+*/
 struct Ticket {
     title: String,
     description: String,
@@ -8,7 +22,13 @@ struct Ticket {
 
 // TODO: Implement the `PartialEq` trait for `Ticket`.
 
-impl PartialEq for Ticket {}
+impl PartialEq for Ticket {
+    fn eq(&self, other: &Self) -> bool {
+        self.title == other.title
+            && self.description == other.description
+            && self.status == other.status
+    }
+}
 
 #[cfg(test)]
 mod tests {
