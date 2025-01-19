@@ -19,7 +19,8 @@ Crate B implements IsEven for u32
 Crate C provides a (different) implementation of the IsEven trait for u32
 Crate D depends on both B and C and calls 1.is_even()
 Which implementation should be used? The one defined in B? Or the one defined in C?
-There's no good answer, therefore the orphan rule was defined to prevent this scenario. Thanks to the orphan rule, neither crate B nor crate C would compile.
+There's no good answer, therefore the orphan rule was defined to prevent this scenario.
+Thanks to the orphan rule, neither crate B nor crate C would compile.
 
 Further reading
 There are some caveats and exceptions to the orphan rule as stated above.
