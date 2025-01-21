@@ -13,15 +13,16 @@
 // You don't have to though: it's perfectly okay to write three separate
 // implementations manually. Venture further only if you're curious.
 
-trait Power {
-    type Output;
-    fn power(&self, n: u32) -> Self::Output;
+trait Power<T> {
+    type Input;
+
+    fn power(&self, n: T) -> Self::Input;
 }
 
-impl Power for u32 {
-    type Output = u32;
+impl Power<u32> for u32 {
+    type Input = u32;
 
-    fn power(&self, n: u32) -> Self::Output {
+    fn power(&self, n: u32) -> Self::Input {
         let mut multi = 1;
         for _ in 1..=n {
             multi *= self;
@@ -30,12 +31,24 @@ impl Power for u32 {
     }
 }
 
-impl Power for u16 {
-    type Output = u16;
+impl Power<u16> for u32 {
+    type Input = u32;
 
-    fn power(&self, n: u32) -> Self::Output {
+    fn power(&self, n: u16) -> Self::Input {
         let mut multi = 1;
         for _ in 1..=n {
+            multi *= self;
+        }
+        multi
+    }
+}
+
+impl Power<&u32> for u32 {
+    type Input = u32;
+
+    fn power(&self, n: &u32) -> Self::Input {
+        let mut multi = 1;
+        for _ in 1..=*n {
             multi *= self;
         }
         multi
