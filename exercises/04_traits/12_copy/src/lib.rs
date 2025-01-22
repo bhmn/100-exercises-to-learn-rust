@@ -14,7 +14,8 @@ impl WrappingU32 {
     }
 }
 //روش اول
-//چون نوع تی مون همون نوع wra...
+//چون نوع تی مون همون نوع
+//WrappingU32
 //هست به این دلیل و مقدار پیش فرض سلف هست نیازی نیست بنویسم
 impl Add for WrappingU32 {
     type Output = WrappingU32;
