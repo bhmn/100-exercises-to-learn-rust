@@ -9,7 +9,7 @@
 //
 // Tests are located in the `tests` folder—pay attention to the visibility of your types and methods.
 
-use std::ops::Add;
+use std::ops::{Add, Deref};
 
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub struct SaturatingU16 {
@@ -59,7 +59,6 @@ impl Add<SaturatingU16> for SaturatingU16 {
         }
     }
 }
-
 // impl Add for SaturatingU16 {
 //     type Output = u16;
 
