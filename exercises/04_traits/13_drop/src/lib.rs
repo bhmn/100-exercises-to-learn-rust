@@ -2,19 +2,30 @@
 //  unless a certain operation has been performed on it.
 //  You can see the expected API in the tests below.
 
-struct DropBomb {}
+struct DropBomb {
+    isDefuse: bool,
+}
 impl DropBomb {
     fn new() -> Self {
-        DropBomb {}
+        DropBomb { isDefuse: false }
     }
 
-    fn defuse(&self){
+    fn defuse(&mut self) {
+        self.isDefuse = true;
+    }
 
+    fn is_defuse(&self) -> bool {
+        self.isDefuse
     }
 }
 
-
-
+impl Drop for DropBomb {
+    fn drop(&mut self) {
+        if !self.is_defuse() {
+            panic!()
+        }
+    }
+}
 
 #[cfg(test)]
 mod tests {
