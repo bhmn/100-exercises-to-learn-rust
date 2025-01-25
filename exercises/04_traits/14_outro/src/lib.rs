@@ -101,6 +101,9 @@ impl Add<&u16> for SaturatingU16 {
     }
 }
 
+//assert_eq!(a + a, 20u16); برای اینه
+//یعنی دوتا SaturatingU16 باهام جمع بشن جواب یه
+//u16 میشه
 impl PartialEq<u16> for SaturatingU16 {
     fn eq(&self, other: &u16) -> bool {
         self.value == *other
