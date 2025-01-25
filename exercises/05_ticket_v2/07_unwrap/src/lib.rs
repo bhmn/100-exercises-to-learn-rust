@@ -1,8 +1,26 @@
 // TODO: `easy_ticket` should panic when the title is invalid.
 //   When the description is invalid, instead, it should use a default description:
 //   "Description not provided".
-fn easy_ticket(title: String, description: String, status: Status) -> Ticket {
-    todo!()
+fn easy_ticket(title: String, description: String, status: Status) -> Result<Ticket, String> {
+    if title.is_empty() {
+        return Err("Title cannot be empty".to_owned());
+    }
+    if title.len() > 50 {
+        return Err("Title cannot be longer than 50 bytes".to_owned());
+    }
+    if description.is_empty() || description.len() > 500 {
+        return Ok(Ticket {
+            title,
+            description: "Description not provided".to_string(),
+            status,
+        });
+    }
+
+    Ok(Ticket {
+        title,
+        description,
+        status,
+    })
 }
 
 #[derive(Debug, PartialEq, Clone)]
@@ -50,24 +68,25 @@ mod tests {
     #[test]
     #[should_panic(expected = "Title cannot be empty")]
     fn title_cannot_be_empty() {
-        easy_ticket("".into(), valid_description(), Status::ToDo);
+        easy_ticket("".into(), valid_description(), Status::ToDo).unwrap();
     }
 
     #[test]
     fn template_description_is_used_if_empty() {
-        let ticket = easy_ticket(valid_title(), "".into(), Status::ToDo);
+        let ticket = easy_ticket(valid_title(), "".into(), Status::ToDo).unwrap();
         assert_eq!(ticket.description, "Description not provided");
     }
 
     #[test]
     #[should_panic(expected = "Title cannot be longer than 50 bytes")]
     fn title_cannot_be_longer_than_fifty_chars() {
-        easy_ticket(overly_long_title(), valid_description(), Status::ToDo);
+        easy_ticket(overly_long_title(), valid_description(), Status::ToDo).unwrap();
     }
 
     #[test]
     fn template_description_is_used_if_too_long() {
-        let ticket = easy_ticket(valid_title(), overly_long_description(), Status::ToDo);
+        let ticket = easy_ticket(valid_title(), overly_long_description(), Status::ToDo)
+            .expect("Description not provided");
         assert_eq!(ticket.description, "Description not provided");
     }
 }
