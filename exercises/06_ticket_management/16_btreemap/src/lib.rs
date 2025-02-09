@@ -3,7 +3,7 @@
 //  references to the tickets, ordered by their `TicketId`.
 //  Implement additional traits on `TicketId` if needed.
 
-use std::collections::btree_map::IntoIter;
+use std::collections::btree_map::Values;
 use std::collections::BTreeMap;
 use std::ops::{Index, IndexMut};
 use ticket_fields::{TicketDescription, TicketTitle};
@@ -68,13 +68,13 @@ impl TicketStore {
     }
 }
 
-impl IntoIterator for &TicketStore {
-    type Item = Ticket;
+impl<'a> IntoIterator for &'a TicketStore {
+    type Item = &'a Ticket;
 
-    type IntoIter = IntoIter<TicketId, Self::Item>;
+    type IntoIter = Values<'a, TicketId, Ticket>;
 
     fn into_iter(self) -> Self::IntoIter {
-        todo!()
+        self.tickets.values()
     }
 }
 
