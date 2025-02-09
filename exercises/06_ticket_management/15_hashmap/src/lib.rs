@@ -57,11 +57,11 @@ impl TicketStore {
     }
 
     pub fn get(&self, id: TicketId) -> Option<&Ticket> {
-        Some(&self[id])
+        self.tickets.get(&id)
     }
 
     pub fn get_mut(&mut self, id: TicketId) -> Option<&mut Ticket> {
-        Some(&mut self[id])
+        self.tickets.get_mut(&id)
     }
 }
 
