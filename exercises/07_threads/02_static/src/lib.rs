@@ -3,6 +3,7 @@
 //  Do not allocate any additional memory!
 use std::thread;
 
+//my
 pub fn sum(slice: &'static [i32]) -> i32 {
     //todo!()
     if slice.is_empty() {
@@ -12,6 +13,16 @@ pub fn sum(slice: &'static [i32]) -> i32 {
     let handel2 = thread::spawn(|| slice[slice.len() / 2 + 1..slice.len()].iter().sum::<i32>());
     handel1.join().unwrap() + handel2.join().unwrap()
 }
+
+// pub fn sum(slice: &'static [i32]) -> i32 {
+//     let mid = slice.len() / 2;
+//     let (slice1, slice2) = slice.split_at(mid);
+
+//     let handle1 = thread::spawn(move || slice1.iter().sum::<i32>());
+//     let handle2 = thread::spawn(move || slice2.iter().sum::<i32>());
+
+//     handle1.join().unwrap() + handle2.join().unwrap()
+// }
 
 #[cfg(test)]
 mod tests {
