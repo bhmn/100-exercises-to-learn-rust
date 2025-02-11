@@ -17,7 +17,7 @@ use std::thread;
 pub fn sum(v: Vec<i32>) -> i32 {
     // let mut su = 0;
     let len = v.len();
-    if len == 0 {
+    if v.is_empty() {
         return 0;
     }
     // let v1 = v.clone();
