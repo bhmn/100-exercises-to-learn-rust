@@ -60,6 +60,7 @@ pub fn server(receiver: Receiver<Command>) {
 
                 Use clone() when you want to clone the entire Option<T> itself.
                 */
+                //کلون کردن یه رفرنس یه کپی کامل از داده رو بهت میده که مالکش هستی نه رفرنس چون کلون کردن دیپ کپیه
                 //اینم کار میکنه
                 //let _ = response_sender.send(Some(ticket.unwrap().clone()));
                 //ولی این یکی کوتاه تره
