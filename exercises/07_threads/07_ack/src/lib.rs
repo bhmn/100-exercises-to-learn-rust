@@ -1,4 +1,4 @@
-use data::TicketDraft;
+use data::{Ticket, TicketDraft};
 use std::sync::mpsc::{Receiver, Sender};
 use store::TicketId;
 
@@ -11,11 +11,11 @@ pub mod store;
 pub enum Command {
     Insert {
         draft: TicketDraft,
-        response_sender: Sender<Command>,
+        response_sender: Sender<TicketId>,
     },
     Get {
         id: TicketId,
-        response_sender: Sender<Command>,
+        response_sender: Sender<Option<Ticket>>,
     },
 }
 
@@ -34,13 +34,17 @@ pub fn server(receiver: Receiver<Command>) {
                 draft,
                 response_sender,
             }) => {
-               todo!()
+                // todo!()
+                let ticket_id = store.add_ticket(draft);
+                let _ = response_sender.send(ticket_id);
             }
             Ok(Command::Get {
                 id,
                 response_sender,
             }) => {
-                todo!()
+                // todo!()
+                let ticket = store.get(id);
+                let _ = response_sender.send(ticket.cloned());
             }
             Err(_) => {
                 // There are no more senders, so we can safely break
