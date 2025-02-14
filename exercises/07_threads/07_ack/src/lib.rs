@@ -50,16 +50,19 @@ pub fn server(receiver: Receiver<Command>) {
                 //--------------------------------------------------------------------------------------------
                 let a = Some(String::from("hello"));
                 let b = a.clone(); // Clones the entire Option<String>
-                cloned() works on Option<&T> and clones the value inside the reference:
                 //--------------------------------------------------------------------------------------------
+                cloned() works on Option<&T> and clones the value inside the reference:
                 let a = Some(String::from("hello"));
                 let b = a.as_ref().cloned(); // Clones the String inside the reference
-                
+
                 When to Use cloned()
                 Use cloned() when you have an Option<&T> and want to convert it to an Option<T> by cloning the inner value.
 
                 Use clone() when you want to clone the entire Option<T> itself.
                 */
+                //اینم کار میکنه
+                //let _ = response_sender.send(Some(ticket.unwrap().clone()));
+                //ولی این یکی کوتاه تره
                 let _ = response_sender.send(ticket.cloned());
             }
             Err(_) => {
