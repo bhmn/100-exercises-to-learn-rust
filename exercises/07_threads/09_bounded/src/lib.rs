@@ -12,25 +12,33 @@ pub struct TicketStoreClient {
 }
 
 impl TicketStoreClient {
-    pub fn insert(&self, draft: TicketDraft) -> Result<TicketId, RecvError> {
-        let (sender_response, receive_response) = sync_channel(20);
-        let _ = self.sender.send(Command::Insert {
-            draft,
-            response_channel: sender_response,
-        });
-        receive_response.recv()
+    pub fn insert(&self, draft: TicketDraft) -> Result<TicketId, OverLoadError> {
+        let (sender_response, receive_response) = sync_channel(1);
+        self.sender
+            .try_send(Command::Insert {
+                draft,
+                response_channel: sender_response,
+            })
+            .map_err(|_| OverLoadError)?;
+        Ok(receive_response.recv().unwrap())
     }
 
-    pub fn get(&self, id: TicketId) -> Result<Option<Ticket>, RecvError> {
+    pub fn get(&self, id: TicketId) -> Result<Option<Ticket>, OverLoadError> {
         //todo!()
-        let (sender_response, receive_response) = sync_channel(20);
-        let _ = self.sender.send(Command::Get {
-            id,
-            response_channel: sender_response,
-        });
-        receive_response.recv()
+        let (sender_response, receive_response) = sync_channel(1);
+        self.sender
+            .try_send(Command::Get {
+                id,
+                response_channel: sender_response,
+            })
+            .map_err(|_| OverLoadError)?;
+        Ok(receive_response.recv().unwrap())
     }
 }
+
+#[derive(Debug)]
+
+pub struct OverLoadError;
 
 pub fn launch(capacity: usize) -> TicketStoreClient {
     //todo!();
