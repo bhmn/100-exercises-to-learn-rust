@@ -96,6 +96,8 @@ pub fn server(receiver: Receiver<Command>) {
                 response_channel,
             }) => {
                 //todo!()
+
+                //از طریق if let
                 // if let Some(ticket) = store.get_mut(patch.id) {
                 //     if let Some(title) = patch.title {
                 //         ticket.title = title;
@@ -109,17 +111,27 @@ pub fn server(receiver: Receiver<Command>) {
                 //     }
                 // };
 
+                //match
                 match store.get_mut(patch.id) {
                     Some(ticket) => {
-                        if let Some(title) = patch.title {
-                            ticket.title = title;
-                        };
-                        if let Some(description) = patch.description {
-                            ticket.description = description;
-                        };
-                        if let Some(status) = patch.status {
-                            ticket.status = status;
-                        };
+                        match patch.title {
+                            Some(title) => {
+                                ticket.title = title;
+                            }
+                            None => {}
+                        }
+                        match patch.description {
+                            Some(description) => {
+                                ticket.description = description;
+                            }
+                            None => {}
+                        }
+                        match patch.status {
+                            Some(status) => {
+                                ticket.status = status;
+                            }
+                            None => {}
+                        }
                     }
                     None => {}
                 }
