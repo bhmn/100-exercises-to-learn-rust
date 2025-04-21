@@ -1,43 +1,31 @@
-use std::collections::BTreeMap;
+use crate::store::TicketId;
+use ticket_fields::{TicketDescription, TicketTitle};
 
-struct Ticket {
-    title: Title,
-    description: Description,
-    status: Status,
+#[derive(Clone, Debug, PartialEq)]
+pub struct Ticket {
+    pub id: TicketId,
+    pub title: TicketTitle,
+    pub description: TicketDescription,
+    pub status: Status,
 }
 
-pub struct Title(String);
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct TicketDraft {
+    pub title: TicketTitle,
+    pub description: TicketDescription,
+}
 
-pub struct Description(String);
-
+#[derive(Clone, Debug, Copy, PartialEq, Eq)]
 pub enum Status {
-    Pending,
-    DoIno,
-    Progressing,
+    ToDo,
+    InProgress,
+    Done,
 }
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
-struct TicketId(i32);
-
-struct TicketStore {
-    tickets: BTreeMap<TicketId, Ticket>,
-    count: i32,
-}
-
-impl TicketStore {
-    fn new() -> Self {
-        Self {
-            tickets: BTreeMap::new(),
-            count: 0,
-        }
-    }
-
-    fn add_tickets(&mut self, ticket: Ticket) {
-        self.count += 1;
-        self.tickets.insert(TicketId(self.count), ticket);
-    }
-
-    fn get(&self, ticket_id: TicketId) -> Option<&Ticket> {
-        self.tickets.get(&ticket_id)
-    }
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct TicketPatch {
+    pub id: TicketId,
+    pub title: Option<TicketTitle>,
+    pub description: Option<TicketDescription>,
+    pub status: Option<Status>,
 }
