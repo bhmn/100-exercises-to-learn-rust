@@ -110,53 +110,68 @@ pub fn server(receiver: Receiver<Command>) {
             }) => {
                 //todo!()
 
-                //از طریق if let
-                // if let Some(ticket) = store.get_mut(patch.id) {
-                //     if let Some(title) = patch.title {
-                //         ticket.title = title;
-                //     }
-                //     if let Some(description) = patch.description {
-                //         ticket.description = description;
-                //     }
-
-                //     if let Some(status) = patch.status {
-                //         ticket.status = status;
-                //     }
-                // };
-
-                //match
-                match store.get_mut(patch.id) {
-                    Some(ticket) => {
-                        match patch.title {
-                            Some(title) => {
-                                // ticket.write(). = title;
-                                if let Ok(mut ticket) = ticket.write() {
-                                    ticket.title = title;
-                                }
-                            }
-                            None => {}
-                        }
-                        match patch.description {
-                            Some(description) => {
-                                // ticket.get_mut().unwrap().description = description;
-                                if let Ok(mut ticket) = ticket.write() {
-                                    ticket.description = description;
-                                }
-                            }
-                            None => {}
-                        }
-                        match patch.status {
-                            Some(status) => {
-                                //ticket.get_mut().unwrap().status = status;
-                                if let Ok(mut ticket) = ticket.write() {
-                                    ticket.status = status;
-                                }
-                            }
-                            None => {}
+                //از طریق if let version
+                if let Some(ticket) = store.get_mut(patch.id) {
+                    if let Some(title) = patch.title {
+                        if let Ok(mut ticket) = ticket.write() {
+                            ticket.title = title;
                         }
                     }
-                    None => {}
-                }
+                    if let Some(description) = patch.description {
+                        if let Ok(mut ticket) = ticket.write() {
+                            ticket.description = description;
+                        }
+                    }
+
+                    if let Some(status) = patch.status {
+                        if let Ok(mut ticket) = ticket.write() {
+                            ticket.status = status;
+                        }
+                    }
+                };
+
+                //match version
+                // match store.get_mut(patch.id) {
+                //     Some(ticket) => {
+                //         match patch.title {
+                //             Some(title) => {
+                //                 // ticket.write(). = title;
+                //                 match ticket.write() {
+                //                     Ok(mut temp_ticket) => {
+                //                         temp_ticket.title = title;
+                //                     }
+                //                     Err(e) => {}
+                //                 }
+                //             }
+                //             None => {}
+                //         }
+                //         match patch.description {
+                //             Some(description) => {
+                //                 // ticket.get_mut().unwrap().description = description;
+                //                 match ticket.write() {
+                //                     Ok(mut temp_ticket) => {
+                //                         temp_ticket.description = description;
+                //                     }
+                //                     Err(e) => {}
+                //                 }
+                //             }
+                //             None => {}
+                //         }
+                //         match patch.status {
+                //             Some(status) => {
+                //                 //ticket.get_mut().unwrap().status = status;
+                //                 match ticket.write() {
+                //                     Ok(mut temp_ticket) => {
+                //                         temp_ticket.status = status;
+                //                     }
+                //                     Err(e) => {}
+                //                 }
+                //             }
+                //             None => {}
+                //         }
+                //     }
+                //     None => {}
+                // }
 
                 let _ = response_channel.send(());
             }
